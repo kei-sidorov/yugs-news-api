@@ -12,7 +12,4 @@ try {
     exit();
 }
 
-
-
-
-
+echo $router->getModule();
