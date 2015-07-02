@@ -29,7 +29,7 @@ class Notify {
         $this->iosKeyPass = $config["push"]["ios-key-pass"];
         $this->iosMode = ($config["push"]["ios-mode"] == "production") ? APN_PRODUCTION : APN_SANDBOX;
 
-        $this->db = db::getInstance();
+        $this->db = Database::getInstance();
     }
 
     /**
@@ -40,7 +40,7 @@ class Notify {
      */
     private function isTokenExists($token, $type)
     {
-        $query = $this->db->db->prepare("SELECT COUNT(1) FROM `tokens` WHERE `key` = :key AND `type` = :type LIMIT 1");
+        $query = $this->db->_db->prepare("SELECT COUNT(1) FROM `tokens` WHERE `key` = :key AND `type` = :type LIMIT 1");
         $query->execute( array( "key" => $token,
                                 "type" => (int) $type )
                         );
@@ -69,7 +69,7 @@ class Notify {
             return false;
         }
 
-        $query = $this->db->db->prepare("INSERT INTO `tokens` SET `key` = :key, `type` = :type");
+        $query = $this->db->_db->prepare("INSERT INTO `tokens` SET `key` = :key, `type` = :type");
         $query->execute( array( "key" => $token,
                                 "type" => (int) $type )
                         );
@@ -186,7 +186,7 @@ class Notify {
      */
     private function getTokens($type)
     {
-        $query = $this->db->db->prepare("SELECT `key` FROM `tokens` WHERE `type` = :type");
+        $query = $this->db->_db->prepare("SELECT `key` FROM `tokens` WHERE `type` = :type");
         $query->execute( array("type" => $type ) );
         $data = Array();
 

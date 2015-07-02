@@ -27,6 +27,9 @@ class Database {
     {
     }
 
+    /**
+     * @return Database
+     */
     public static function getInstance()
     {
         if (!(self::$_instance instanceof self))
