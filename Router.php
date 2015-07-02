@@ -24,13 +24,13 @@ class Router {
         $componentsCount = sizeof($components);
 
         if ($componentsCount > 1) {
-            $this->module = $components[0];
-            $this->method = $components[1];
+            $this->module = $components[1];
+            $this->method = $components[2];
 
             $this->params = $_REQUEST;
 
             // Other parts of URI components are params
-            for($i=2; $i<$componentsCount; $i++)
+            for($i=3; $i<$componentsCount; $i++)
             {
                 $this->params[$i-2] = $components[$i];
             }
