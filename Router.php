@@ -12,6 +12,7 @@ class Router {
     private $module;
     private $params = array();
 
+    public static $SUBFOLDER = 1;
 
     /**
      * Constructor. Parse request URI.
@@ -23,16 +24,18 @@ class Router {
         $components = explode('/', $_SERVER['REQUEST_URI']);
         $componentsCount = sizeof($components);
 
+        $subfolder = self::$SUBFOLDER;
+
         if ($componentsCount > 1) {
-            $this->module = $components[1];
-            $this->method = $components[2];
+            $this->module = $components[$subfolder];
+            $this->method = $components[$subfolder+1];
 
             $this->params = $_REQUEST;
 
             // Other parts of URI components are params
-            for($i=3; $i<$componentsCount; $i++)
+            for($i=$subfolder+2; $i<$componentsCount; $i++)
             {
-                $this->params[$i-2] = $components[$i];
+                $this->params[$i-3] = $components[$i];
             }
         }else{
             throw new Exception("Can't init API core: bad request");
