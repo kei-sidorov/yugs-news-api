@@ -131,7 +131,7 @@ class NewsCollection {
     {
         $query = $this->db->_db->prepare("DELETE FROM `news` WHERE `id` = :id");
         $query->execute(
-            array(  "id" => $id )
+            array( "id" => $id )
         );
 
         return true;
