@@ -102,6 +102,8 @@ class Notify {
      */
     private function sendDataToAPS($tokens, $message, $elementId)
     {
+        if (sizeof($tokens) == 0) return;
+
         $apn = apn_init();
         apn_set_array($apn, array(
             'certificate' => $this->iosCertificateFile,
@@ -143,6 +145,7 @@ class Notify {
      */
     private function sendDataToGCM($tokens, $message, $elementId)
     {
+        if (sizeof($tokens) == 0) return;
 
         $headers = array
         (

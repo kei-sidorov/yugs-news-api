@@ -61,11 +61,20 @@ class Router {
     }
 
     /**
-     * @param $name number or sting key
+     * @param mixed $name number or sting key
+     * @param string $defaultValue Default value if key not exists
+     * @param bool $required Required flag
      * @return mixed
+     * @throws AppException
      */
-    public function getParams($name)
+    public function getParams($name, $defaultValue = "", $required = false)
     {
+        if (!isset($this->params[$name])) {
+            if ($required) {
+                throw new AppException("Parameter {$name} is required");
+            }
+            return $defaultValue;
+        }
         return $this->params[$name];
     }
 }
