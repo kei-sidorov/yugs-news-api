@@ -98,6 +98,7 @@ try {
                 {
                     $token = $router->getParams("token", 0, true);
                     $notifyController->registerNewToken($token, Notify::TOKEN_TYPE_GCM);
+                    setResult(true, $router);
                     break;
                 }
 
@@ -105,6 +106,7 @@ try {
                 {
                     $token = $router->getParams("token", 0, true);
                     $notifyController->registerNewToken($token, Notify::TOKEN_TYPE_APS);
+                    setResult(true, $router);
                     break;
                 }
 
