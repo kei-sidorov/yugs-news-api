@@ -25,10 +25,11 @@ class NewsCollection {
      * @param string $header Header of news. Must be minimum 15 chars length
      * @param string $text Content of news. Must be minimum 100 chars length
      * @param array $images
+     * @param int $date Timestamp of publish date
      * @return int Id of added news
      * @throws AppException
      */
-    public function addNews($type, $header, $text, array $images)
+    public function add($type, $header, $text, array $images, $date = 0)
     {
 
         if (strlen($header) < 5)
@@ -44,9 +45,13 @@ class NewsCollection {
             throw new AppException('News must contains minimum one image.');
         }
 
+        if ($date == 0) {
+            $date = time();
+        }
+
         $query = "INSERT INTO `news` SET
                               `header` = :header,
-                              `date` = NOW(),
+                              `date` =:date,
                               `images` = :images,
                               `type` = :type
                               `text` = :text";
@@ -55,7 +60,8 @@ class NewsCollection {
         $query->execute(    array(  "header" => $header,
                                     "images" => json_encode($images),
                                     "type" => $type,
-                                    "text" => $text )
+                                    "text" => $text,
+                                    "date" => date('Y-m-d', $date))
                         );
 
         $newsId = $this->db->_db->lastInsertId();
@@ -69,7 +75,7 @@ class NewsCollection {
      * @param int $id Id of news
      * @return mixed Associated array with news data
      */
-    public function getNews($id)
+    public function get($id)
     {
         $query = $this->db->_db->prepare("SELECT * FROM `news` WHERE `id` = :id LIMIT 1");
         $query->execute(array("id" => $id));
@@ -85,7 +91,7 @@ class NewsCollection {
      * @param int $page Current page for calculate offset
      * @return array
      */
-    public function getNewsList($type, $limit, $page = 1) {
+    public function getList($type, $limit, $page = 1) {
         $page -= 1;
         $limit = (int) $limit;
         $offset = $page * $limit;
@@ -113,6 +119,22 @@ class NewsCollection {
         }
 
         return $result;
+    }
+
+    /**
+     * Delete news with specified Id
+     *
+     * @param $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        $query = $this->db->_db->prepare("DELETE FROM `news` WHERE `id` = :id");
+        $query->execute(
+            array(  "id" => $id )
+        );
+
+        return true;
     }
 
 
