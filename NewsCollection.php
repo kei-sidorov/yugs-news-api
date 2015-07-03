@@ -10,6 +10,9 @@ class NewsCollection {
 
     private $db;
 
+    /**
+     * Constructor. Init database.
+     */
     public function __construct()
     {
         $this->db = Database::getInstance();
@@ -17,6 +20,7 @@ class NewsCollection {
 
     /**
      * Add news to collection
+     *
      * @param int $type Type of news (rubric)
      * @param string $header Header of news. Must be minimum 15 chars length
      * @param string $text Content of news. Must be minimum 100 chars length
@@ -57,6 +61,58 @@ class NewsCollection {
         $newsId = $this->db->_db->lastInsertId();
 
         return $newsId;
+    }
+
+    /**
+     * Gets news with some Id
+     *
+     * @param int $id Id of news
+     * @return mixed Associated array with news data
+     */
+    public function getNews($id)
+    {
+        $query = $this->db->_db->prepare("SELECT * FROM `news` WHERE `id` = :id LIMIT 1");
+        $query->execute(array("id" => $id));
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Gets news with specified type. Uses paging.
+     *
+     * @param int $type Id of type (rubric)
+     * @param int $limit Limit for output
+     * @param int $page Current page for calculate offset
+     * @return array
+     */
+    public function getNewsList($type, $limit, $page = 1) {
+        $page -= 1;
+        $limit = (int) $limit;
+        $offset = $page * $limit;
+
+        $query = $this->db->_db->prepare("SELECT * FROM `news` JOIN
+                                          (SELECT id FROM `news` WHERE `type` = :type ORDER BY `id` DESC LIMIT :offset, :limit)
+                                          AS `b` ON `b`.`id` = `news`.`id`");
+        $query->execute(
+            array(  "type" => $type,
+                    "offset" => $offset,
+                    "limit" => $limit
+            )
+        );
+
+        $result = [];
+        while ($row = $query->fetch(PDO::FETCH_ASSOC))
+        {
+            $data = $row;
+
+            $images = json_decode($row['images'], true);
+            $data["preview"] = $images[0];
+            $data['images'] = $images;
+
+            $result[] = $data;
+        }
+
+        return $result;
     }
 
 
