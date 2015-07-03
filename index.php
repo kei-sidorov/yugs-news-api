@@ -64,10 +64,16 @@ try {
                     $text = $router->getParams("text", 0, true);
                     $images = $router->getParams("images", 0, true);
                     $date = $router->getParams("date", 0);
+                    $notify = $router->getParams("notify", 0);
 
                     $images = json_decode($images, true);
 
                     $result = $news->add($type, $header, $text, $images, $date);
+
+                    if ($notify == 1) {
+                        $notifyController = new Notify();
+                        $notifyController->sendData($header, $result);
+                    }
 
                     setResult(true, $router, $result);
 
@@ -79,6 +85,35 @@ try {
                     setBadRequest('Unknown method for module news');
                 }
             }
+            break;
+        }
+
+        case 'push':
+        {
+            $notifyController = new Notify();
+
+            switch ($router->getMethod())
+            {
+                case 'register_token_android':
+                {
+                    $token = $router->getParams("token", 0, true);
+                    $notifyController->registerNewToken($token, Notify::TOKEN_TYPE_GCM);
+                    break;
+                }
+
+                case 'register_token_ios':
+                {
+                    $token = $router->getParams("token", 0, true);
+                    $notifyController->registerNewToken($token, Notify::TOKEN_TYPE_APS);
+                    break;
+                }
+
+                default:
+                {
+                    setBadRequest('Unknown method for module push');
+                }
+            }
+
             break;
         }
 

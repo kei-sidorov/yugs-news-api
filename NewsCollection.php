@@ -53,7 +53,7 @@ class NewsCollection {
                               `header` = :header,
                               `date` =:date,
                               `images` = :images,
-                              `type` = :type
+                              `type` = :type,
                               `text` = :text";
 
         $query = $this->db->_db->prepare($query);

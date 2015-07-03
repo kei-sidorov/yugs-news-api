@@ -81,7 +81,6 @@ class Notify {
      * @param $message
      * @param $elementId
      * @throws AppException
-     * @internal param $typeId
      */
     public function sendData($message, $elementId)
     {
