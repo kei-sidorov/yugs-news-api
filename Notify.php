@@ -79,27 +79,28 @@ class Notify {
 
     /**
      * @param $message
-     * @param $typeId
      * @param $elementId
+     * @throws AppException
+     * @internal param $typeId
      */
-    public function sendData($message, $typeId, $elementId)
+    public function sendData($message, $elementId)
     {
         $gcmTokens = $this->getTokens(self::TOKEN_TYPE_GCM);
         $apsTokens = $this->getTokens(self::TOKEN_TYPE_APS);
 
-        $this->sendDataToGCM($gcmTokens, $message, $typeId, $elementId);
-        $this->sendDataToAPS($apsTokens, $message, $typeId, $elementId);
+        $this->sendDataToGCM($gcmTokens, $message, $elementId);
+        $this->sendDataToAPS($apsTokens, $message, $elementId);
     }
 
     /**
      * Sends push to Apple Push Notification Service (for iOS apps)
      * @param $tokens
      * @param $message
-     * @param $typeId
      * @param $elementId
      * @throws AppException
+     * @internal param $typeId
      */
-    private function sendDataToAPS($tokens, $message, $typeId, $elementId)
+    private function sendDataToAPS($tokens, $message, $elementId)
     {
         $apn = apn_init();
         apn_set_array($apn, array(
@@ -115,7 +116,6 @@ class Notify {
             'body' => substr($message, 0, 65) . "…"
         ));
 
-        apn_payload_add_custom_property($payload, 't', $typeId);
         apn_payload_add_custom_property($payload, 'i', $elementId);
 
         $error = NULL;
@@ -138,10 +138,10 @@ class Notify {
      * Sends push via Google Cloud Messaging (for Android apps)
      * @param $tokens
      * @param $message
-     * @param $typeId
      * @param $elementId
+     * @internal param $typeId
      */
-    private function sendDataToGCM($tokens, $message, $typeId, $elementId)
+    private function sendDataToGCM($tokens, $message, $elementId)
     {
 
         $headers = array
@@ -158,7 +158,6 @@ class Notify {
             'tickerText'	=> '',
             'vibrate'	=> 1,
             'sound'		=> 1,
-            'listType'  => $typeId,
             'obj' => $elementId
         );
 

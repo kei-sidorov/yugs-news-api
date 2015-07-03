@@ -2,8 +2,8 @@
 
 require_once('AppException.php');
 require_once('Database.php');
+require_once('Notify.php');
 require_once('Router.php');
-
 
 try {
     $router = new Router();
