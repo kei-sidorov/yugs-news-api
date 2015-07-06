@@ -38,7 +38,7 @@ class Router {
                 $this->params[$i-3] = $components[$i];
             }
         }else{
-            throw new Exception("Can't init API core: bad request");
+            throw new AppException("Can't init API core");
         }
     }
 
@@ -65,13 +65,13 @@ class Router {
      * @param string $defaultValue Default value if key not exists
      * @param bool $required Required flag
      * @return mixed
-     * @throws AppException
+     * @throws APIException
      */
     public function getParams($name, $defaultValue = "", $required = false)
     {
         if (!isset($this->params[$name])) {
             if ($required) {
-                throw new AppException("Parameter {$name} is required");
+                throw new APIException("Parameter {$name} is required");
             }
             return $defaultValue;
         }

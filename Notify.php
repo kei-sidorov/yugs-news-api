@@ -97,11 +97,18 @@ class Notify {
      * @param $message
      * @param $elementId
      * @throws AppException
-     * @internal param $typeId
      */
     private function sendDataToAPS($tokens, $message, $elementId)
     {
         if (sizeof($tokens) == 0) return;
+
+        if (!file_exists($this->iosCertificateFile)) {
+           throw new AppException("iOS certificate file not exists or incorrect path");
+        }
+
+        if (!file_exists($this->iosKeyFile)) {
+            throw new AppException("iOS key file not exists or incorrect path");
+        }
 
         $apn = apn_init();
         apn_set_array($apn, array(
@@ -140,11 +147,16 @@ class Notify {
      * @param $tokens
      * @param $message
      * @param $elementId
-     * @internal param $typeId
+     * @throws AppException
      */
     private function sendDataToGCM($tokens, $message, $elementId)
     {
         if (sizeof($tokens) == 0) return;
+
+        if (strlen($this->androidApiKey) == 0)
+        {
+            throw new AppException("Google API key is not specified");
+        }
 
         $headers = array
         (
@@ -170,13 +182,13 @@ class Notify {
         );
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-        curl_setopt($ch, CURLOPT_POST, true );
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers );
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $payload ) );
-        curl_exec($ch );
+        curl_setopt($ch, CURLOPT_URL, 'https://android.googleapis.com/gcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_exec($ch);
 
     }
 

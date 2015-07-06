@@ -11,7 +11,14 @@ class AppException extends Exception {
     public function __construct($message = "", $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
-        $this->storeException();
+
+        $config = parse_ini_file("config.ini", true);
+        $needDebug = $config["error"]["debug"];
+
+        if ($needDebug == 1)
+        {
+            $this->storeException();
+        }
     }
 
     private function storeException()
@@ -24,5 +31,6 @@ class AppException extends Exception {
         file_put_contents($fileName, $data);
     }
 
-
 }
+
+class APIException extends Exception{}

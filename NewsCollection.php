@@ -27,22 +27,22 @@ class NewsCollection {
      * @param array $images
      * @param int $date Timestamp of publish date
      * @return int Id of added news
-     * @throws AppException
+     * @throws APIException
      */
     public function add($type, $header, $text, array $images, $date = 0)
     {
 
         if (strlen($header) < 5)
         {
-            throw new AppException('Header must be 15 chars minimum.');
+            throw new APIException('Header must be 15 chars minimum.');
         }
         if (strlen($text) < 100)
         {
-            throw new AppException('Text is too short');
+            throw new APIException('Text is too short');
         }
         if (!sizeof($images))
         {
-            throw new AppException('News must contains minimum one image.');
+            throw new APIException('News must contains minimum one image.');
         }
 
         if ($date == 0) {

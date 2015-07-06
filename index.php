@@ -2,6 +2,7 @@
 
 require_once('AppException.php');
 require_once('Database.php');
+require_once('TextCleaner.php');
 require_once('NewsCollection.php');
 require_once('Notify.php');
 require_once('Router.php');
@@ -65,12 +66,24 @@ try {
                     $images = $router->getParams("images", 0, true);
                     $date = $router->getParams("date", 0);
                     $notify = $router->getParams("notify", 0);
+                    $clean = $router->getParams("clean", 0);
 
                     $images = json_decode($images, true);
 
+                    if ($clean == 1)
+                    {
+                        $cleaner = new TextCleaner();
+
+                        $text = $cleaner->clearText($text);
+
+                        $imagesFromText = $cleaner->getPhotos($text);
+                        $images = array_merge($images, $imagesFromText);
+                    }
+
                     $result = $news->add($type, $header, $text, $images, $date);
 
-                    if ($notify == 1) {
+                    if ($notify == 1)
+                    {
                         $notifyController = new Notify();
                         $notifyController->sendData($header, $result);
                     }
@@ -124,6 +137,10 @@ try {
             setBadRequest('Unknown module');
         }
     }
+}catch (APIException $e) {
+    setResult(false, $router, array("error_message" => $e->getMessage(),
+                                    "error_code" => $e->getCode())
+             );
 }catch (AppException $e) {
     setBadRequest($e->getMessage());
 }
