@@ -95,7 +95,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
                 "header" => $element->getValue("h1"),
                 "date" => $element->getValue("publish_time")->getFormattedDate("d.m.Y"),
                 "image" => "http://" . $_SERVER['HTTP_HOST'] . $element->getValue("anons_pic"),
-                "original_link" => "http://" . $_SERVER['HTTP_HOST'] . umiHierarchy::getInstance()->getPathById($id)
+                "original_link" => "http://" . $_SERVER['HTTP_HOST'] . umiHierarchy::getInstance()->getPathById($elementId)
             );
         }
 
