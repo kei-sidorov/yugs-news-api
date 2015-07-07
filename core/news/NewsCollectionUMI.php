@@ -46,7 +46,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
             "header" => $element->getValue("h1"),
             "text" => $text,
             "images" => $images,
-            "date" => $element->getValue("publish_date")->getFormattedDate("d.m.Y"),
+            "date" => $element->getValue("publish_time")->getFormattedDate("d.m.Y"),
             "original_link" => "http://" . $_SERVER['HTTP_HOST'] . umiHierarchy::getInstance()->getPathById($id)
         );
 
@@ -93,7 +93,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
             $items[] = array(
                 "id" => $elementId,
                 "header" => $element->getValue("h1"),
-                "date" => $element->getValue("publish_date")->getFormattedDate("d.m.Y"),
+                "date" => $element->getValue("publish_time")->getFormattedDate("d.m.Y"),
                 "image" => "http://" . $_SERVER['HTTP_HOST'] . $element->getValue("anons_pic"),
             );
         }
