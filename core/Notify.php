@@ -59,7 +59,7 @@ class Notify {
      */
     public function registerNewToken($token, $type)
     {
-        if ($type != self::TOKEN_TYPE_APS || $type != self::TOKEN_TYPE_GCM)
+        if ($type != self::TOKEN_TYPE_APS && $type != self::TOKEN_TYPE_GCM)
         {
             throw new AppException('Invalid token type given');
         }
