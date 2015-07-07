@@ -32,7 +32,7 @@ try {
 
                 case 'get':
                 {
-                    $id = $router->getParams("id");
+                    $id = $router->getParams("id", 0, true);
                     $result = $news->get($id);
 
                     if ($result) {
@@ -77,6 +77,14 @@ try {
                     setResult(true, $router, $result);
 
                     break;
+                }
+
+                case 'render':
+                {
+                    $id = $router->getParams("id", 0, true);
+                    $path = $config["global"]["path"];
+                    echo file_get_contents("http://" . $_SERVER["HTTP_HOST"] . $path . "renderNews.php?id=" . $id);
+                    exit();
                 }
 
                 default:
@@ -140,6 +148,7 @@ try {
  */
 function setResult($success, Router $router, $data = "")
 {
+    header( "Content-Type: application/json" );
     echo json_encode( array(
         "module" => $router->getModule(),
         "method" => $router->getMethod(),
