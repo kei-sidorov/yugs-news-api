@@ -1,5 +1,6 @@
 <?php
     $path = "http://" . $_SERVER["HTTP_HOST"].$path;
+    $encodedImages = urldecode(json_encode($item['images']));
 ?><html>
 <head>
     <meta charset="utf-8">
@@ -11,7 +12,7 @@
 <h2><?=$item['header']?></h2>
 
 <?php $image = $item['images'][0]; $i = 0; ?>
-<a href="<?=$path?>showImage.php?images=<?=json_encode($item['images'])?>&imageNum=<?=$i?>#gid=1&pid=<?=$i + 1?>" target="_blank">
+<a href="<?=$path?>showImage.php?images=<?=$encodedImages?>&imageNum=<?=$i?>#gid=1&pid=<?=$i + 1?>" target="_blank">
     <img src="<?=$image?>" style="width: 100%; height: auto;" />
 </a>
 
@@ -25,7 +26,7 @@
     <div class="photos">
         <?php  $i = 0;
         foreach ($item['images'] as $image): ?>
-            <a href="<?=$path?>showImage.php?images=<?=json_encode($item['images'])?>&imageNum=<?=$i?>#gid=1&pid=<?=$i + 1?>" target="_blank">
+            <a href="<?=$path?>showImage.php?images=<?=$encodedImages?>&imageNum=<?=$i?>#gid=1&pid=<?=$i + 1?>" target="_blank">
                 <img src="<?=$image?>" />
             </a>
             <?php $i++; ?>
