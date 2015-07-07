@@ -1,6 +1,6 @@
 <?php
     $path = "http://" . $_SERVER["HTTP_HOST"].$path;
-    $encodedImages = urldecode(json_encode($item['images']));
+    $encodedImages = urlencode(json_encode($item['images']));
 ?><html>
 <head>
     <meta charset="utf-8">
