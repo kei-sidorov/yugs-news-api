@@ -12,7 +12,7 @@ $images = json_decode($_REQUEST['images']);
 
 <html>
 <head>
-    <title>Фото</title>
+    <title>Photos</title>
 
     <script src='http://photoswipe.s3-eu-west-1.amazonaws.com/pswp/dist/photoswipe.min.js'></script>
     <script src='http://photoswipe.s3-eu-west-1.amazonaws.com/pswp/dist/photoswipe-ui-default.min.js'></script>
