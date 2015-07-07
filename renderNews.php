@@ -37,6 +37,8 @@ try {
 
     $item = $news->get($itemId);
 
+    $path = $config["global"]["path"];
+
     header('Content-Type: text/html; charset=utf-8');
     include('newsTemplate.php');
 

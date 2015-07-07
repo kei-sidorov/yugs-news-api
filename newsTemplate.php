@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="http://<?=$_SERVER["HTTP_HOST"].$path?>assets/css/style.css?v=1" />
 </head>
 
 <body>
