@@ -91,7 +91,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
             $items[] = array(
                 "id" => $elementId,
                 "header" => $element->getValue("h1"),
-                "image" => "http://" . $_SERVER['HTTP_HOST'] . substr($element->getValue("anons_pic"), 1),
+                "image" => "http://" . $_SERVER['HTTP_HOST'] . $element->getValue("anons_pic"),
             );
         }
 
