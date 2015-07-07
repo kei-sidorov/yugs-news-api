@@ -1,11 +1,6 @@
 <?php
 
-require_once('AppException.php');
-require_once('Database.php');
-require_once('TextCleaner.php');
-require_once('NewsCollection.php');
-require_once('Notify.php');
-require_once('Router.php');
+require_once('config.php');
 
 $config = parse_ini_file("config.ini", true);
 Router::$SUBFOLDER = $config["global"]["app-level"];
@@ -19,7 +14,8 @@ try {
 try {
     switch ($router->getModule()) {
         case 'news': {
-            $news = new NewsCollection();
+            $newsClass = $config["news"]["class"];
+            $news = new $newsClass();
 
             switch ($router->getMethod())
             {
@@ -69,16 +65,6 @@ try {
                     $clean = $router->getParams("clean", 0);
 
                     $images = json_decode($images, true);
-
-                    if ($clean == 1)
-                    {
-                        $cleaner = new TextCleaner();
-
-                        $text = $cleaner->clearText($text);
-
-                        $imagesFromText = $cleaner->getPhotos($text);
-                        $images = array_merge($images, $imagesFromText);
-                    }
 
                     $result = $news->add($type, $header, $text, $images, $date);
 

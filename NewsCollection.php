@@ -6,7 +6,7 @@
  * Time: 12:02
  */
 
-class NewsCollection {
+class NewsCollection implements NewsCollectionInterface {
 
     private $db;
 
