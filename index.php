@@ -120,7 +120,7 @@ try {
 
         default:
         {
-            setBadRequest('Unknown module');
+            setBadRequest('Unknown module' . $router->getModule());
         }
     }
 }catch (APIException $e) {
