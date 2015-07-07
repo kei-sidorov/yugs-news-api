@@ -116,7 +116,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
      */
     public function add($type, $header, $text, array $images, $date = 0)
     {
-        return 0;
+        return $type;
     }
 
     /**
