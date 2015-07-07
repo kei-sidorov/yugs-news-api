@@ -15,7 +15,7 @@ class TextCleaner {
      */
     function __construct()
     {
-        $config = parse_ini_file("config.ini", true);
+        $config = parse_ini_file("./config.ini", true);
 
         $this->siteUrl = $config["cleaner"]["images-site-url"];
         if (substr($this->siteUrl, -1, 1) != '/')

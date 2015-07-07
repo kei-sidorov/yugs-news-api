@@ -2,7 +2,7 @@
 
 require_once('config.php');
 
-$config = parse_ini_file("config.ini", true);
+$config = parse_ini_file("./config.ini", true);
 Router::$SUBFOLDER = $config["global"]["app-level"];
 
 try {

@@ -29,7 +29,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
         $mainImage = $element->getValue("anons_pic");
         if ($mainImage)
         {
-            $mainImage = "http://" . $_SERVER['HTTP_HOST'] . substr($mainImage, 1);
+            $mainImage = "http://" . $_SERVER['HTTP_HOST'] . $mainImage;
             $images[] = $mainImage;
         }
 
