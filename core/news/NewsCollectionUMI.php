@@ -63,6 +63,7 @@ class NewsCollectionUMI implements NewsCollectionInterface {
      */
     public function getList($type, $limit, $page = 1)
     {
+        $config = parse_ini_file("./config/config.ini", true);
         $page -=1;
 
         $hierarchyTypeId = umiHierarchyTypesCollection::getInstance()->getTypeByName("news", "item")->getId();
@@ -75,7 +76,11 @@ class NewsCollectionUMI implements NewsCollectionInterface {
         $sel = new umiSelection;
         $sel->addElementType($hierarchyTypeId);
         $sel->addHierarchyFilter($type, 0, true);
-        $sel->addPropertyFilterEqual($publishToAppFieldId, true);
+
+        if ($config["umi"]["ignore-publish-flag"] != 1) {
+            $sel->addPropertyFilterEqual($publishToAppFieldId, true);
+        }
+
         $sel->setOrderByProperty($publishTimeFieldId, false);
         $sel->addLimit($limit, $page);
 
