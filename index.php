@@ -170,6 +170,9 @@ function setResult($success, Router $router, $data = "")
 function setBadRequest($message)
 {
     header('HTTP/1.0 400 Bad Request', true, 400);
-    echo $message;
+
+    echo "<h1>Bad request</h1>";
+    echo "<p>" . $message . "</p>";
+
     exit();
 }
