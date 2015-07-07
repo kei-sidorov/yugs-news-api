@@ -31,7 +31,7 @@ try {
         throw new AppException('Incorrect news item Id');
     }
 
-    $config = parse_ini_file("./config.ini", true);
+    $config = parse_ini_file("./config/config.ini", true);
     $newsClass = $config["news"]["class"];
     $news = new $newsClass();
 

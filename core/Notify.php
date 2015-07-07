@@ -20,7 +20,7 @@ class Notify {
      */
     public function __construct()
     {
-        $config = parse_ini_file("config.ini", true);
+        $config = parse_ini_file("./config/config.ini", true);
 
         $this->androidApiKey = $config["push"]["android-api-key"];
 

@@ -34,7 +34,7 @@ class Database {
     {
         if (!(self::$_instance instanceof self))
         {
-            $config = parse_ini_file("config.ini", true);
+            $config = parse_ini_file("./config/config.ini", true);
             $config = $config["database"];
             self::$_instance = new self($config["host"], $config["username"], $config["password"], $config["database"]);
         }
