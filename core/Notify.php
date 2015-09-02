@@ -10,10 +10,14 @@ class Notify {
 
     private $db;
     private $androidApiKey = "";
-    private $iosKeyFile, $iosCertificateFile, $iosKeyPass, $iosMode;
+    private $iosCertificateFile, $iosKeyPass, $iosPushServer;
 
     const TOKEN_TYPE_GCM = 1;
     const TOKEN_TYPE_APS = 2;
+
+    const APNS_SERVER_PRODUCTION = "gateway.push.apple.com";
+    const APNS_SERVER_SANDBOX = "gateway.sandbox.push.apple.com";
+
 
     /**
      *  Constructor. Load push settings and init database.
@@ -24,10 +28,9 @@ class Notify {
 
         $this->androidApiKey = $config["push"]["android-api-key"];
 
-        $this->iosCertificateFile = $config["push"]["ios-cert-file"];
-        $this->iosKeyFile = $config["push"]["ios-key-file"];
+        $this->iosCertificateFile = $config["push"]["ios-solid-cert-file"];
         $this->iosKeyPass = $config["push"]["ios-key-pass"];
-        $this->iosMode = ($config["push"]["ios-mode"] == "production") ? APN_PRODUCTION : APN_SANDBOX;
+        $this->iosPushServer = ($config["push"]["ios-mode"] == "production") ? self::APNS_SERVER_PRODUCTION : self::APNS_SERVER_SANDBOX;
 
         $this->db = Database::getInstance();
     }
@@ -106,40 +109,46 @@ class Notify {
            throw new AppException("iOS certificate file not exists or incorrect path");
         }
 
-        if (!file_exists($this->iosKeyFile)) {
-            throw new AppException("iOS key file not exists or incorrect path");
+        foreach($tokens as $token)
+        {
+            $this->sendiOSPush($token, $message, $elementId);
         }
+    }
 
-        $apn = apn_init();
-        apn_set_array($apn, array(
-            'certificate' => $this->iosCertificateFile,
-            'private_key' => $this->iosKeyFile,
-            'private_key_pass' => $this->iosKeyPass,
-            'tokens' => $tokens,
-            'mode' => $this->iosMode
-        ));
+    /**
+     * Send one iOS push message
+     * @param $token
+     * @param $message
+     * @param $elementId
+     * @return bool
+     */
+    private function sendiOSPush($token, $message, $elementId)
+    {
+        $ctx = stream_context_create();
+        stream_context_set_option($ctx, 'ssl', "local_cert", $this->iosCertificateFile);
+        stream_context_set_option($ctx, 'ssl', "passphrase", $this->iosKeyPass);
 
-        $payload = apn_payload_init();
-        apn_payload_set_array($payload, array(
-            'body' => substr($message, 0, 65) . "…"
-        ));
+        $fp = stream_socket_client("ssl://".$this->iosPushServer.":2195",
+            $errorCode,
+            $errorString,
+            60,
+            STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT,
+            $ctx);
 
-        apn_payload_add_custom_property($payload, 'i', $elementId);
+        $body = array (
+            "aps" => array(
+                "alert" => $message
+            ),
+            "i" => $elementId
+        );
 
-        $error = NULL;
-        $errorCode = 0;
+        $payload = json_encode($body);
+        $message = chr(0) . pack('n', 32) . pack('H*', $token) . pack('n', strlen($payload)) . $payload;
 
-        if(apn_connect($apn, $error, $errorCode)) {
-            if(!apn_send($apn, $payload, $error, $errorCode)) {
-                throw new AppException('Could not sent push notification: ' . $error);
-            }
-        } else {
-            throw new AppException('Could not connected to Apple Push Notification Service: ' . $error);
-        }
+        $result = fwrite($fp, $message, strlen($message));
+        fclose($fp);
 
-        apn_close($apn);
-        apn_payload_free($payload);
-        apn_free($apn);
+        return (bool) $result;
     }
 
     /**

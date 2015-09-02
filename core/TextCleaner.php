@@ -32,18 +32,8 @@ class TextCleaner {
      */
     public function clearText($text) {
 
-        $safeTags = array('<br>', '<br />', '<br/>', '</p>', '</P>', "\t", "\r", "\n");
-        $replaceVal = array('__BR__', '__BR__', '__BR__', '__P__', '__P__', '', '', '');
-        $replaceValUnique = array('__BR__', '__P__');
-        $backTags = array('<br />', '</p><p>');
-
-        $text = str_replace($safeTags, $replaceVal, $text);
-        $text = strip_tags( html_entity_decode( $text ) );
+        $text = strip_tags( html_entity_decode( $text ), "<p><iframe><br><br/><a>" );
         $text = preg_replace("#[\s]{2,}#iu", "", $text);
-        $text = str_replace($replaceValUnique, $backTags, $text);
-
-        $text = "<p>" . $text . "</p>";
-        $text = str_replace("<p></p>", "", $text);
 
         return $text;
     }
