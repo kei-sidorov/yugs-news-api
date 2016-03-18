@@ -103,4 +103,9 @@ http://domain.ru/newsapi/news/add/ и передать слудующие пар
 * bigCell - большие ячейки
 * smallCell — малые ячейки
 
-<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-inApp.png" alt="inApp" style="width: 200px; height: auto;">
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-inApp.png" alt="inApp" width="200" height="360"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-poster.png" alt="poster" width="200" height="360"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-bigCells.png" alt="bigCell" width="200" height="360"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-smallCells.png" alt="smallCell" width="200" height="360">
+
+
