@@ -103,4 +103,4 @@ http://domain.ru/newsapi/news/add/ и передать слудующие пар
 * bigCell - большие ячейки
 * smallCell — малые ячейки
 
-![inApp](screenshots/phone-inApp.png)
+<img src="//github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-inApp.png" alt="inApp" style="width: 200px;">
