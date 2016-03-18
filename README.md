@@ -99,13 +99,33 @@ http://domain.ru/newsapi/news/add/ и передать слудующие пар
 Определяет вид отображения на телефонах. Может содержать значения:
 
 * inApp — состоит из ячеек малой и большой высоты, их комбинация настраивается при компляции приложения
-* poster — вертикальная картика, три вида текста
+* poster — вертикальная картика, три строчки текста
 * bigCell - большие ячейки
 * smallCell — малые ячейки
+
+Ниже по порядку скписка представлены скриншоты этих видов 
 
 <img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-inApp.png" alt="inApp" width="200" height="360"> &nbsp;
 <img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-poster.png" alt="poster" width="200" height="360"> &nbsp;
 <img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-bigCells.png" alt="bigCell" width="200" height="360"> &nbsp;
 <img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/phone-smallCells.png" alt="smallCell" width="200" height="360">
+
+#### viewTypePad
+
+Определяет вид отображения на планшетаз. Может содержать значения:
+
+* grid — горизонтальная картинка и заголовок, вывод в виде сетки по 2 элемента в строке 
+* poster — вертикальная картика, заголовок и лид, вывод в видее списка, отцентрированный
+* bigCell - большие ячейки с лидом новости, вывод в видее списка, отцентрированный
+* split — экран разбит на два вида, список и новость
+
+Ниже по порядку скписка представлены скриншоты этих видов 
+
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/pad-grid.PNG" alt="grid" width="210" height="280"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/pad-poster.PNG" alt="poster" width="210" height="280"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/pad-bigCells.PNG" alt="bigCell" width="210" height="280"> &nbsp;
+<img src="https://github.com/kei-sidorov/yugs-news-api/raw/master/screenshots/pad-split.PNG" alt="split" width="210" height="280">
+
+
 
 
