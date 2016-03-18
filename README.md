@@ -103,4 +103,4 @@ http://domain.ru/newsapi/news/add/ и передать слудующие пар
 * bigCell - большие ячейки
 * smallCell — малые ячейки
 
-![inApp](screenshots/phone-inApp.png =200x)
+![inApp](screenshots/phone-inApp.png)
