@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Banner sample</title>
+
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-weight: 300;
+        }
+        body
+        {
+            font-size: 16px;
+        }
+        #content
+        {
+            background-image: url(bg.png);
+            background-size: cover;
+            color: #333;
+            position: relative;
+            text-shadow: 1px 1px 3px white;
+        }
+        h2 {
+            font-size: 1em;
+            width: 75%;
+            padding: 5px 0px 0px 10px;
+        }
+        p {
+            font-size: 0.5em;
+            width: 70%;
+            width: 75%;
+            padding: 3px 0px 0px 10px;
+            font-weight: 600;
+        }
+        a.button
+        {
+            display: inline-block;
+            position: absolute;
+            right: 5px;
+            top: 20px;
+            border: 1px solid white;
+            text-shadow: none;
+            border-radius: 7px;
+            padding: 3px;
+            font-size: 0.8em;
+            color: white;
+            background-color: rgba(46, 204, 113, 0.9);
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="content">
+    <h2>Цветы с доставкой</h2>
+    <p>Закажи цветы на юргинском сайте и будь уверен что придут вовремя!</p>
+    <a class="button" id="button" href="#" onclick="return navigate()">Узнать цены</a>
+</div>
+
+<script>
+    var size = window.location.hash.substr(1).split('x');
+    var div = document.getElementById('content');
+    var currentUrl = "";
+    div.style.width = size[0] + 'px';
+    div.style.height = size[1] + 'px';
+
+    var fontsize = Math.round(parseFloat(size[1]) / 3.125) + 'px';
+    document.getElementsByTagName('body')[0].style.fontSize = fontsize;
+
+    window.onload = function() {
+        var button = document.getElementById('button');
+        var style = window.getComputedStyle(button);
+        console.log(parseFloat(style.height.substr(0, 2)));
+        button.style.top = (parseFloat(size[1]) - parseFloat(style.height.substr(0, 2)) - 6) / 2 + 'px';
+        window.location = 'ios:ready';
+    }
+
+    function getNavigateURL()
+    {
+        return currentUrl;
+    }
+
+    function navigate()
+    {
+        currentUrl = "http://buket.yugs.ru/";
+
+        window.location = 'ios:navigate';
+        return false;
+    }
+
+</script>
+</body>
+</html>
