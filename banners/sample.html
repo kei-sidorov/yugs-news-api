@@ -75,7 +75,7 @@
         var style = window.getComputedStyle(button);
         console.log(parseFloat(style.height.substr(0, 2)));
         button.style.top = (parseFloat(size[1]) - parseFloat(style.height.substr(0, 2)) - 6) / 2 + 'px';
-        window.location = 'ios:ready';
+        window.location = 'banner:ready';
     }
 
     function getNavigateURL()
@@ -87,7 +87,7 @@
     {
         currentUrl = "http://buket.yugs.ru/";
 
-        window.location = 'ios:navigate';
+        window.location = 'banner:navigate';
         return false;
     }
 
